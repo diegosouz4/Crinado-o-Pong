@@ -1,10 +1,14 @@
 var canvas = document.querySelector('canvas');
 var brush = canvas.getContext('2d');
 
-criaRetangulo(black,0,0,600,400);
+var xBolinha = 300;
+var yBolinha = 200;
+var raioBolinha = 10;
+var velocidade = 5;
+var velocidadeXBolinha = velocidade;
+var velocidadeYBolinha = velocidade;
 
-
-
+criaRetangulo('black',0,0,600,400);
 
 // Funções de formas
 
@@ -13,22 +17,39 @@ function criaRetangulo(cor,xInicial,yInicial,xFinal,yFinal) {
     brush.fillRect(xInicial,yInicial,xFinal,yFinal);
 }
 
-function criaBola(cor,x,y,raio) {
-    brush.fillStyle = cor;
+function criaBolinha() {
+    brush.fillStyle = 'white';
     brush.beginPath();
-    brush.arc(x,y,raio,0,2 * Math.PI);
+    brush.arc(xBolinha,yBolinha,raioBolinha,0,2 * Math.PI);
     brush.fill();
 }
 
+//funções da Bolinha
+function moveBolinha() {
+    xBolinha += velocidadeXBolinha;
+    yBolinha += velocidadeYBolinha;
+}
 
+function colideBordas() {
+    if(xBolinha >= canvas.width - raioBolinha || xBolinha <= 0 + raioBolinha)  {
+        velocidadeXBolinha *= -1;
+    } else if(yBolinha >= canvas.height - raioBolinha || yBolinha <= 0 + raioBolinha)  {
+        velocidadeYBolinha *= -1;
+    }
+}
 
-
-
+// funções genéricas
+function limpaTela() {
+    brush.clearRect(0,0,600,400);
+}
 
 // Função Atualiza
 
-function draw() {
-
+function Atualiza() {
+    limpaTela();
+    criaBolinha();
+    moveBolinha();
+    colideBordas();
 }
 
-setInterval(draw, 20);
+setInterval(Atualiza, 20);
