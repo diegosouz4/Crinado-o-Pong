@@ -31,9 +31,10 @@ function moveBolinha() {
 }
 
 function colideBordas() {
-    if(xBolinha >= canvas.width - raioBolinha || xBolinha <= 0 + raioBolinha)  {
+    if(xBolinha+ raioBolinha > canvas.width || xBolinha - raioBolinha < 0)  {
         velocidadeXBolinha *= -1;
-    } else if(yBolinha >= canvas.height - raioBolinha || yBolinha <= 0 + raioBolinha)  {
+    }
+    if(yBolinha + raioBolinha > canvas.height || yBolinha - raioBolinha < 0)  {
         velocidadeYBolinha *= -1;
     }
 }
