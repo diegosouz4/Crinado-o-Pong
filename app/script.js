@@ -1,6 +1,7 @@
 var canvas = document.querySelector('canvas');
 var brush = canvas.getContext('2d');
 
+//Variáveis dda bolinha
 var xBolinha = 300;
 var yBolinha = 200;
 var raioBolinha = 10;
@@ -17,6 +18,7 @@ function criaRetangulo(cor,xInicial,yInicial,xFinal,yFinal) {
     brush.fillRect(xInicial,yInicial,xFinal,yFinal);
 }
 
+//funções da Bolinha
 function criaBolinha() {
     brush.fillStyle = 'white';
     brush.beginPath();
@@ -24,7 +26,6 @@ function criaBolinha() {
     brush.fill();
 }
 
-//funções da Bolinha
 function moveBolinha() {
     xBolinha += velocidadeXBolinha;
     yBolinha += velocidadeYBolinha;
