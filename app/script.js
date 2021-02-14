@@ -1,20 +1,24 @@
-var canvas = document.querySelector('canvas');
-var brush = canvas.getContext('2d');
+const canvas = document.querySelector('canvas');
+const brush = canvas.getContext('2d');
+
+//Variáveis Jogabilidade
+const velocidade = 6;
+const arrowUp = 38;
+const arrowDown = 40;
 
 //Variáveis dda bolinha
-var xBolinha = 300;
-var yBolinha = 200;
-var raioBolinha = 10;
-var velocidade = 6;
-var velocidadeXBolinha = velocidade;
-var velocidadeYBolinha = velocidade;
+let xBolinha = 300;
+let yBolinha = 200;
+const raioBolinha = 10;
+let velocidadeXBolinha = velocidade;
+let velocidadeYBolinha = velocidade;
 
 //Variáveis da raquete
-var xRaquete = 5;
-var yRaquete = 160;
-var larguraRaquete = 8;
-var alturaRaquete = 80;
-var velocidadeRaquete = velocidade * 4;
+let xRaquete = 5;
+let yRaquete = 160;
+const larguraRaquete = 8;
+const alturaRaquete = 80;
+const velocidadeRaquete = velocidade * 4;
 
 //funções da Bolinha
 function criaBolinha() {
@@ -64,9 +68,6 @@ function movePlayer(event) {
         yRaquete += velocidadeRaquete;
     }
 }
-
-var arrowUp = 38;
-var arrowDown = 40;
 
 document.onkeydown = movePlayer;
 
