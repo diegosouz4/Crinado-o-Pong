@@ -5,18 +5,16 @@ var brush = canvas.getContext('2d');
 var xBolinha = 300;
 var yBolinha = 200;
 var raioBolinha = 10;
-var velocidade = 5;
+var velocidade = 6;
 var velocidadeXBolinha = velocidade;
 var velocidadeYBolinha = velocidade;
 
-criaRetangulo('black',0,0,600,400);
-
-// Funções de formas
-
-function criaRetangulo(cor,xInicial,yInicial,xFinal,yFinal) {
-    brush.fillStyle = cor;
-    brush.fillRect(xInicial,yInicial,xFinal,yFinal);
-}
+//Variáveis da raquete
+var xRaquete = 5;
+var yRaquete = 160;
+var larguraRaquete = 8;
+var alturaRaquete = 80;
+var velocidadeRaquete = velocidade * 4;
 
 //funções da Bolinha
 function criaBolinha() {
@@ -40,10 +38,49 @@ function colideBordas() {
     }
 }
 
+function reiniciaBolinha() {
+    if(xBolinha - raioBolinha < - raioBolinha || xBolinha + raioBolinha > canvas.width + raioBolinha || yBolinha - raioBolinha < - raioBolinha || yBolinha + raioBolinha > canvas.height + raioBolinha ) {
+        xBolinha = 300;
+        yBolinha = 200;
+    }
+}
+
+function colideRaquete() {
+    if(xBolinha - raioBolinha < xRaquete + larguraRaquete && yBolinha + raioBolinha > yRaquete && yBolinha + raioBolinha < yRaquete + alturaRaquete) {
+        velocidadeXBolinha *= -1;
+    }
+}
+
+// funções do player
+function criaPlayer() {
+    criaRetangulo('white',xRaquete,yRaquete,larguraRaquete,alturaRaquete);
+}
+
+function movePlayer(event) {
+    if(event.keyCode == arrowUp ) {
+        yRaquete -= velocidadeRaquete;
+    }
+    if(event.keyCode == arrowDown) {
+        yRaquete += velocidadeRaquete;
+    }
+}
+
+var arrowUp = 38;
+var arrowDown = 40;
+
+document.onkeydown = movePlayer;
+
 // funções genéricas
 function limpaTela() {
     brush.clearRect(0,0,600,400);
 }
+
+function criaRetangulo(cor,xInicial,yInicial,xFinal,yFinal) {
+    brush.fillStyle = cor;
+    brush.fillRect(xInicial,yInicial,xFinal,yFinal);
+}
+
+criaRetangulo('black',0,0,600,400);
 
 // Função Atualiza
 
@@ -52,6 +89,9 @@ function Atualiza() {
     criaBolinha();
     moveBolinha();
     colideBordas();
+    reiniciaBolinha();
+    criaPlayer();
+    colideRaquete();
 }
 
 setInterval(Atualiza, 20);
