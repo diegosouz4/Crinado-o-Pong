@@ -2,7 +2,7 @@ const canvas = document.querySelector('canvas');
 const brush = canvas.getContext('2d');
 
 //Variáveis Jogabilidade
-const velocidade = 6;
+const velocidade = 5;
 const arrowUp = 38;
 const arrowDown = 40;
 
@@ -14,11 +14,18 @@ let velocidadeXBolinha = velocidade;
 let velocidadeYBolinha = velocidade;
 
 //Variáveis da raquete
-let xRaquete = 5;
-let yRaquete = 160;
 const larguraRaquete = 8;
 const alturaRaquete = 80;
 const velocidadeRaquete = velocidade * 4;
+
+//Variáveis Jogador
+let xRaquete = 5;
+let yRaquete = 160;
+
+//Variáveis Oponente
+let xOponente = 587;
+let yOponente = 160;
+let velocidadeYOponente;
 
 //funções da Bolinha
 function criaBolinha() {
@@ -50,7 +57,10 @@ function reiniciaBolinha() {
 }
 
 function colideRaquete() {
-    if(xBolinha - raioBolinha < xRaquete + larguraRaquete && yBolinha + raioBolinha > yRaquete && yBolinha + raioBolinha < yRaquete + alturaRaquete) {
+    if(xBolinha - raioBolinha < xRaquete + larguraRaquete && yBolinha - raioBolinha > yRaquete && yBolinha + raioBolinha < yRaquete + alturaRaquete) {
+        velocidadeXBolinha *= -1;
+    }
+    if(xBolinha + raioBolinha > xOponente && yBolinha - raioBolinha > yOponente && yBolinha + raioBolinha <= yOponente + alturaRaquete) {
         velocidadeXBolinha *= -1;
     }
 }
@@ -70,6 +80,17 @@ function movePlayer(event) {
 }
 
 document.onkeydown = movePlayer;
+
+//Funções do Oponente
+
+function criaOponente() {
+    criaRetangulo('white', xOponente, yOponente, larguraRaquete, alturaRaquete);
+}
+
+function moveOponente() {
+    velocidadeYOponente = yBolinha - yOponente - alturaRaquete / 2 -30;
+    yOponente += velocidadeYOponente;
+}
 
 // funções genéricas
 function limpaTela() {
@@ -92,6 +113,8 @@ function Atualiza() {
     colideBordas();
     reiniciaBolinha();
     criaPlayer();
+    criaOponente();
+    moveOponente();
     colideRaquete();
 }
 
